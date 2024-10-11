@@ -1,24 +1,26 @@
 name: travleplanner
 description: "Simple Travle Planner"
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.3
+    sdk: ^3.5.3
 
 dependencies:
-  flutter:
-    sdk: flutter
+    flutter:
+        sdk: flutter
+    intl: ^0.17.0 # 날짜 및 시간 형식 포맷을 위한 패키지
+    shared_preferences: ^2.0.13 # 로컬 데이터 저장 (SharedPreferences)
+    table_calendar: ^3.0.7 # 달력 위젯을 위한 패키지
 
-  cupertino_icons: ^1.0.8
+    cupertino_icons: ^1.0.8
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+    flutter_test:
+        sdk: flutter
 
-  flutter_lints: ^4.0.0
+    flutter_lints: ^4.0.0
 
 flutter:
-
-  uses-material-design: true
+    uses-material-design: true
