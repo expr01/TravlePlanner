@@ -1,10 +1,11 @@
-// domains/travel_plan/models/travel_plan.dart
+// travel_plan.dart
 class TravelPlan {
   final String id;
   final String title;
   final DateTime startDate;
   final DateTime endDate;
   final String destination;
+  final String memo;
 
   TravelPlan({
     required this.id,
@@ -12,5 +13,29 @@ class TravelPlan {
     required this.startDate,
     required this.endDate,
     required this.destination,
+    required this.memo,
   });
+
+  // JSON 변환 메서드 추가 (저장 및 로드 시 필요)
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'startDate': startDate.toIso8601String(),
+      'endDate': endDate.toIso8601String(),
+      'destination': destination,
+      'memo': memo,
+    };
+  }
+
+  factory TravelPlan.fromJson(Map<String, dynamic> json) {
+    return TravelPlan(
+      id: json['id'],
+      title: json['title'],
+      startDate: DateTime.parse(json['startDate']),
+      endDate: DateTime.parse(json['endDate']),
+      destination: json['destination'],
+      memo: json['memo'],
+    );
+  }
 }

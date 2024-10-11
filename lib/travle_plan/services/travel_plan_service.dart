@@ -1,36 +1,35 @@
-import 'package:flutter/material.dart';
+// travel_plan_service.dart
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 import '../models/travel_plan.dart';
 
 class TravelPlanService {
-  // 임시로 메모리에 데이터를 저장하는 리스트 (실제로는 로컬 데이터베이스나 API와 통신 가능)
-  final List<TravelPlan> _travelPlans = [
-    TravelPlan(
-      id: '1',
-      title: 'First Trip',
-      startDate: DateTime(2023, 1, 5),
-      endDate: DateTime(2023, 1, 7),
-      destination: 'Seoul',
-    ),
-    TravelPlan(
-      id: '2',
-      title: 'Second Trip',
-      startDate: DateTime(2023, 2, 10),
-      endDate: DateTime(2023, 2, 15),
-      destination: 'Tokyo',
-    ),
-    TravelPlan(
-      id: '3',
-      title: 'Third Trip',
-      startDate: DateTime(2023, 3, 20),
-      endDate: DateTime(2023, 3, 25),
-      destination: 'New York',
-    ),
-  ];
-
-  // 여행 계획 목록 가져오기 (전체 목록 조회)
+  // 여행 계획 목록을 로컬 저장소에서 가져오기
   Future<List<TravelPlan>> getTravelPlans() async {
-    // 실제로는 데이터베이스나 네트워크 요청이 들어갈 수 있음
-    await Future.delayed(Duration(milliseconds: 500)); // 로딩 시뮬레이션
-    return _travelPlans;
+    final prefs = await SharedPreferences.getInstance();
+    List<String> travelPlanStrings = prefs.getStringList('travelPlans') ?? [];
+    List<TravelPlan> travelPlans = travelPlanStrings
+        .map((planString) => TravelPlan.fromJson(jsonDecode(planString)))
+        .toList();
+    return travelPlans;
+  }
+
+  // 새로운 여행 계획 추가하기
+  Future<void> addTravelPlan(TravelPlan travelPlan) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> travelPlanStrings = prefs.getStringList('travelPlans') ?? [];
+    travelPlanStrings.add(jsonEncode(travelPlan.toJson()));
+    await prefs.setStringList('travelPlans', travelPlanStrings);
+  }
+
+  // 특정 여행 계획 삭제하기
+  Future<void> removeTravelPlan(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> travelPlanStrings = prefs.getStringList('travelPlans') ?? [];
+    travelPlanStrings.removeWhere((planString) {
+      final plan = TravelPlan.fromJson(jsonDecode(planString));
+      return plan.id == id;
+    });
+    await prefs.setStringList('travelPlans', travelPlanStrings);
   }
 }

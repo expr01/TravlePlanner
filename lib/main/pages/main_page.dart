@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travleplanner/shared/widgets/footer.dart';
+import 'package:travelplanner/shared/widgets/footer.dart';
 
 class MainPage extends StatelessWidget {
   @override
