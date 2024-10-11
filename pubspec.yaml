@@ -1,5 +1,5 @@
 name: travleplanner
-description: "Simple Travle Planner"
+description: "Simple Travel Planner"
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -13,6 +13,7 @@ dependencies:
 
   cupertino_icons: ^1.0.8
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -20,5 +21,9 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 flutter:
-
   uses-material-design: true
+
+  assets:
+    - lib/main/assets/1.png
+    - lib/main/assets/2.png
+    - lib/main/assets/3.png
