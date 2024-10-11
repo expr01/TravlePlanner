@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:travelplanner/travle_plan/models/travel_plan.dart';
 import '../models/schedule.dart';
 import '../services/schedule_service.dart';
 import 'add_schedule_page.dart';
 import '../widgets/custom_button.dart';
 
 class ScheduleListPage extends StatefulWidget {
-  const ScheduleListPage({super.key});
+  final TravelPlan travelPlan; // TravelPlan 데이터를 받음
+
+  const ScheduleListPage({super.key, required this.travelPlan});
 
   @override
   _ScheduleListPageState createState() => _ScheduleListPageState();
@@ -16,19 +19,21 @@ class ScheduleListPage extends StatefulWidget {
 class _ScheduleListPageState extends State<ScheduleListPage> {
   List<Schedule> _schedules = [];
   DateTime _focusedDay = DateTime.now();
-  final DateTime _startDate = DateTime(2023, 1, 24); // 여행 시작 날짜
-  final DateTime _endDate = DateTime(2023, 1, 27); // 여행 종료 날짜
   DateTime? _selectedDate; // 선택된 날짜
 
   @override
   void initState() {
     super.initState();
 
+    // travelPlan에서 여행 시작일과 종료일을 가져옴
+    final DateTime startDate = widget.travelPlan.startDate;
+    final DateTime endDate = widget.travelPlan.endDate;
+
     // 현재 날짜가 lastDay 이후라면 focusedDay를 lastDay로 설정
-    if (DateTime.now().isAfter(_endDate)) {
-      _focusedDay = _endDate;
-    } else if (DateTime.now().isBefore(_startDate)) {
-      _focusedDay = _startDate;
+    if (DateTime.now().isAfter(endDate)) {
+      _focusedDay = endDate;
+    } else if (DateTime.now().isBefore(startDate)) {
+      _focusedDay = startDate;
     } else {
       _focusedDay = DateTime.now();
     }
@@ -129,12 +134,17 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFE5E6E1), // 전체 배경 색상 수정
       appBar: AppBar(
-        title: const Column(
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('First Trip',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Text('일본', style: TextStyle(fontSize: 14, color: Colors.grey)),
+            Text(
+              widget.travelPlan.title, // TravelPlan의 title 값 사용
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              widget.travelPlan.destination, // TravelPlan의 destination 값 사용
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
+            ),
           ],
         ),
         actions: [
@@ -148,7 +158,7 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                '${DateFormat('yyyy.MM.dd').format(_startDate)} - ${DateFormat('yyyy.MM.dd').format(_endDate)}',
+                '${DateFormat('yyyy.MM.dd').format(widget.travelPlan.startDate)} - ${DateFormat('yyyy.MM.dd').format(widget.travelPlan.endDate)}',
                 style: const TextStyle(fontSize: 14, color: Colors.black),
               ),
             ),
@@ -160,8 +170,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
           // 달력
           TableCalendar(
             focusedDay: _focusedDay,
-            firstDay: _startDate,
-            lastDay: _endDate,
+            firstDay: widget.travelPlan.startDate, // TravelPlan의 startDate 사용
+            lastDay: widget.travelPlan.endDate, // TravelPlan의 endDate 사용
             selectedDayPredicate: (day) => isSameDay(day, _selectedDate),
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
@@ -206,8 +216,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                 color: Colors.black, // 마지막 날짜의 글자 색상을 검은색으로 설정
               ),
             ),
-            rangeStartDay: _startDate,
-            rangeEndDay: _endDate,
+            rangeStartDay: widget.travelPlan.startDate,
+            rangeEndDay: widget.travelPlan.endDate,
           ),
           if (_selectedDate != null)
             Padding(

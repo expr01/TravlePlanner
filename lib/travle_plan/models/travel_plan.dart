@@ -19,12 +19,12 @@ class TravelPlan {
   // JSON 변환 메서드 추가 (저장 및 로드 시 필요)
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'title': title,
+      'id': id, // auto_increment
+      'title': title, // 제목
       'startDate': startDate.toIso8601String(),
       'endDate': endDate.toIso8601String(),
-      'destination': destination,
-      'memo': memo,
+      'destination': destination, // 국가
+      'memo': memo, // 내용
     };
   }
 

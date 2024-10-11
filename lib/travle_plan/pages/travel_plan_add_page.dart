@@ -5,6 +5,8 @@ import '../models/travel_plan.dart';
 import '../services/travel_plan_service.dart';
 
 class TravelPlanAddPage extends StatefulWidget {
+  const TravelPlanAddPage({super.key});
+
   @override
   _TravelPlanAddPageState createState() => _TravelPlanAddPageState();
 }
@@ -34,7 +36,7 @@ class _TravelPlanAddPageState extends State<TravelPlanAddPage> {
         _startDate = pickedDateRange.start;
         _endDate = pickedDateRange.end;
         _dateController.text =
-        '${_startDate!.year}년 ${_startDate!.month}월 ${_startDate!.day}일 - ${_endDate!.year}년 ${_endDate!.month}월 ${_endDate!.day}일';
+            '${_startDate!.year}년 ${_startDate!.month}월 ${_startDate!.day}일 - ${_endDate!.year}년 ${_endDate!.month}월 ${_endDate!.day}일';
       });
     }
   }
@@ -42,12 +44,20 @@ class _TravelPlanAddPageState extends State<TravelPlanAddPage> {
   // 여행 나라 선택
   Future<void> _selectCountry(BuildContext context) async {
     final List<String> countries = [
-      '가나', '가봉', '가이아나', '감비아', '건지', '과들루프', '과테말라', '괌', '그레나다'
+      '가나',
+      '가봉',
+      '가이아나',
+      '감비아',
+      '건지',
+      '과들루프',
+      '과테말라',
+      '괌',
+      '그레나다'
     ];
     String? selected = await showModalBottomSheet<String>(
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           height: 400,
           child: ListView.builder(
             itemCount: countries.length,
@@ -77,7 +87,7 @@ class _TravelPlanAddPageState extends State<TravelPlanAddPage> {
         _endDate != null &&
         _titleController.text.isNotEmpty &&
         _countryController.text.isNotEmpty) {
-      final String id = Uuid().v4(); // 고유 ID 생성
+      final String id = const Uuid().v4(); // 고유 ID 생성
       final String title = _titleController.text;
       final String memo = _memoController.text;
       final String destination = _countryController.text;
@@ -100,7 +110,7 @@ class _TravelPlanAddPageState extends State<TravelPlanAddPage> {
     } else {
       // 필수 입력 값이 없을 경우 경고 메시지 표시
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('모든 필드를 입력해 주세요.')),
+        const SnackBar(content: Text('모든 필드를 입력해 주세요.')),
       );
     }
   }
@@ -109,9 +119,9 @@ class _TravelPlanAddPageState extends State<TravelPlanAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('여행 계획 추가하기'),
+        title: const Text('여행 계획 추가하기'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -124,42 +134,45 @@ class _TravelPlanAddPageState extends State<TravelPlanAddPage> {
           children: [
             TextField(
               controller: _titleController,
-              decoration: InputDecoration(labelText: '여행 제목'),
+              decoration: const InputDecoration(labelText: '여행 제목'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             GestureDetector(
               onTap: () => _selectDateRange(context),
               child: AbsorbPointer(
                 child: TextField(
                   controller: _dateController,
-                  decoration: InputDecoration(labelText: '여행 날짜', hintText: '날짜를 선택해 주세요'),
+                  decoration: const InputDecoration(
+                      labelText: '여행 날짜', hintText: '날짜를 선택해 주세요'),
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             GestureDetector(
               onTap: () => _selectCountry(context),
               child: AbsorbPointer(
                 child: TextField(
                   controller: _countryController,
-                  decoration: InputDecoration(labelText: '여행 나라', hintText: '나라를 선택해 주세요'),
+                  decoration: const InputDecoration(
+                      labelText: '여행 나라', hintText: '나라를 선택해 주세요'),
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _memoController,
               maxLines: 5,
-              decoration: InputDecoration(labelText: '메모'),
+              decoration: const InputDecoration(labelText: '메모'),
             ),
-            Spacer(),
+            const Spacer(),
             Center(
               child: ElevatedButton(
                 onPressed: _saveTravelPlan,
-                child: Text('Save'),
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 100, vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 100, vertical: 16),
                 ),
+                child: const Text('Save'),
               ),
             ),
           ],
