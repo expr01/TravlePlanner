@@ -1,4 +1,4 @@
-import 'dart:async';  // Timer를 사용하기 위해 추가
+import 'dart:async'; // Timer를 사용하기 위해 추가
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -8,17 +8,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Home(),
     );
   }
 }
 
 class Home extends StatelessWidget {
+  const Home({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const ImageSlider(),
+    return const Scaffold(
+      body: ImageSlider(),
     );
   }
 }
@@ -44,12 +46,12 @@ class _ImageSliderState extends State<ImageSlider> {
   @override
   void initState() {
     super.initState();
-    _startAutoSlide();  // 자동 슬라이드 시작
+    _startAutoSlide(); // 자동 슬라이드 시작
   }
 
   @override
   void dispose() {
-    _timer?.cancel();  // 타이머 취소
+    _timer?.cancel(); // 타이머 취소
     _pageController.dispose();
     super.dispose();
   }
@@ -59,7 +61,7 @@ class _ImageSliderState extends State<ImageSlider> {
       if (_currentPage < images.length - 1) {
         _currentPage++;
       } else {
-        _currentPage = 0;  // 마지막 이미지 이후에는 첫 번째 이미지로 돌아감
+        _currentPage = 0; // 마지막 이미지 이후에는 첫 번째 이미지로 돌아감
       }
       _pageController.animateToPage(
         _currentPage,

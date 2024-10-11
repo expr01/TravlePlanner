@@ -8,7 +8,7 @@ import 'add_schedule_page.dart';
 import '../widgets/custom_button.dart';
 
 class ScheduleListPage extends StatefulWidget {
-  final TravelPlan travelPlan; // TravelPlan 데이터를 받음
+  final TravelPlan travelPlan; // nullable이 아니므로 null이 아님
 
   const ScheduleListPage({super.key, required this.travelPlan});
 
@@ -53,7 +53,10 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
     final newSchedule = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddSchedulePage(selectedDate: selectedDate),
+        builder: (context) => AddSchedulePage(
+          selectedDate: selectedDate,
+          travelPlan: widget.travelPlan, // 명시적으로 widget.travelPlan 전달
+        ),
       ),
     );
 
@@ -73,6 +76,7 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
         builder: (context) => AddSchedulePage(
           selectedDate: schedule.dateTime,
           schedule: schedule, // 수정할 스케줄 전달
+          travelPlan: widget.travelPlan, // travelPlan 전달
         ),
       ),
     );
@@ -185,8 +189,11 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
             },
             calendarStyle: const CalendarStyle(
               todayDecoration: BoxDecoration(
-                color: Colors.lightGreen,
+                color: Colors.white60,
                 shape: BoxShape.circle,
+              ),
+              todayTextStyle: TextStyle(
+                color: Colors.black, // 첫 번째 날짜의 글자 색상을 검은색으로 설정
               ),
               selectedDecoration: BoxDecoration(
                 color: Colors.lightGreen,
@@ -235,7 +242,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
             padding: const EdgeInsets.all(16.0),
             child: CustomButton(
               text: '일정 추가하기', // 버튼에 표시할 텍스트
-              onPressed: () => _addSchedule(_focusedDay), // 버튼 클릭 시 실행될 함수
+              onPressed: () => _addSchedule(
+                  _focusedDay), // travelPlan은 widget.travelPlan으로 참조
             ),
           ),
         ],
@@ -328,8 +336,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                 ),
                 // 수정 버튼
                 IconButton(
-                  icon: const Icon(Icons.edit, color: Colors.black),
-                  onPressed: () => _editSchedule(schedule),
+                  icon: const Icon(Icons.edit, color: Colors.black), // 수정 버튼
+                  onPressed: () => _editSchedule(schedule), // 스케줄 전달
                 ),
                 // 삭제 버튼
                 IconButton(
