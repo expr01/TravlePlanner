@@ -1,7 +1,10 @@
 // main.dart
 import 'package:flutter/material.dart';
-import 'package:travleplanner/main/pages/main_page.dart';
-
+import 'package:travelplanner/main/pages/main_page.dart';
+import 'package:travelplanner/travle_plan/pages/travel_plan_list_page.dart';
+import 'package:travelplanner/travle_plan/pages/travel_plan_add_page.dart';
+import 'package:travelplanner/travle_plan/pages/travel_plan_detail_page.dart';
+import 'package:travelplanner/travle_plan/models/travel_plan.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,6 +21,13 @@ class MyApp extends StatelessWidget {
       ),
       home: MainPage(),
       debugShowCheckedModeBanner: false, // 디버그 배너 제거
+      routes: {
+        '/list': (context) => TravelPlanListPage(),
+        '/add': (context) => TravelPlanAddPage(),
+        '/detail': (context) => TravelPlanDetailPage(
+          travelPlan: ModalRoute.of(context)!.settings.arguments as TravelPlan,
+        ),
+      },
     );
   }
 }
