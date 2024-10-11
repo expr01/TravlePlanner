@@ -1,5 +1,7 @@
+// main.dart
 import 'package:flutter/material.dart';
-import 'schedule/pages/schedule_list_page.dart';
+import 'package:travleplanner/main/pages/main_page.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -11,9 +13,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Travel Planner',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.grey[200],
       ),
-      home: ScheduleListPage(), // 일정 조회 화면이 메인 페이지
+      home: MainPage(),
+      debugShowCheckedModeBanner: false, // 디버그 배너 제거
     );
   }
 }
