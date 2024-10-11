@@ -1,3 +1,4 @@
+// 앱의 진입점 입니다
 import 'package:flutter/material.dart';
 
 void main() {
