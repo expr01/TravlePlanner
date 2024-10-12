@@ -192,7 +192,7 @@ class _TravelPlanAddPageState extends State<TravelPlanAddPage> {
             TextField(
               controller: _memoController,
               maxLines: 5,
-              decoration: const InputDecoration(labelText: '메모'),
+              decoration: const InputDecoration(labelText: '여행 계획'),
             ),
             const Spacer(),
             Center(
