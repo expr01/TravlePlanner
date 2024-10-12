@@ -1,4 +1,3 @@
-// main.dart
 import 'package:flutter/material.dart';
 import 'package:travelplanner/main/pages/main_page.dart';
 import 'package:travelplanner/travle_plan/pages/travel_plan_list_page.dart';
@@ -7,7 +6,7 @@ import 'package:travelplanner/travle_plan/pages/travel_plan_detail_page.dart';
 import 'package:travelplanner/travle_plan/models/travel_plan.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyApp()); // const 제거
 }
 
 class MyApp extends StatelessWidget {

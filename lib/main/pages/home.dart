@@ -1,33 +1,39 @@
 import 'dart:async'; // Timer를 사용하기 위해 추가
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(MyApp()); // const 제거
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Home(),
     );
   }
 }
 
 class Home extends StatelessWidget {
-  const Home({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: ImageSlider(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Padding(
+          padding: EdgeInsets.only(left: 16.0), // 왼쪽에 16픽셀의 여백 추가
+          child: Text(
+            'Travelog',
+            style: TextStyle(color: Colors.black), // 검은색 글씨로 설정
+          ),
+        ),
+        backgroundColor: Colors.white, // 헤더바 배경색 흰색으로 설정
+        elevation: 0, // 그림자 제거
+        centerTitle: false, // 제목을 좌측에 배치
+      ),
+      body: ImageSlider(), // const 제거
     );
   }
 }
 
 class ImageSlider extends StatefulWidget {
-  const ImageSlider({super.key});
-
   @override
   _ImageSliderState createState() => _ImageSliderState();
 }
@@ -38,9 +44,16 @@ class _ImageSliderState extends State<ImageSlider> {
   Timer? _timer;
 
   final List<String> images = [
-    'lib/main/assets/1.png',
-    'lib/main/assets/2.png',
-    'lib/main/assets/3.png',
+    'lib/main/assets/1.jpg',
+    'lib/main/assets/2.jpg',
+    'lib/main/assets/3.jpg',
+    'lib/main/assets/4.jpg',
+    'lib/main/assets/5.jpg',
+    'lib/main/assets/6.jpg',
+    'lib/main/assets/7.jpg',
+    'lib/main/assets/8.jpg',
+    'lib/main/assets/9.jpg',
+    'lib/main/assets/10.jpg',
   ];
 
   @override
